@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+<head>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/styles.css">
+  <script src="https://kit.fontawesome.com/04298be0bb.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/9ba3f6cb6e.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.lordicon.com/lusqsztk.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+  <!-- Fonts -->
+  <link rel="dns-prefetch" href="//fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+</head>
+
+<body>
+  <div class="modal" id="loader" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+
+    <center>
+      <div class="loader"></div>
+    </center>
+
+  </div>
+<!--   <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark" id='nav-page'>
+    <div class="container-fluid" id='container-da-navbar'>
+      <a class="navbar-brand" href="/inicio">
+        <img id='logo-fibracem' src="/images/fibracem.png">
+      </a>
+      <button class="navbar-toggler" id='botao-fechador2' type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="myNav">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link active " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-paste"></i><br>
+              <span class='descricao-menu'>Cadastro</span>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="/cadastroproduto">Produto</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link active " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-dolly"></i><br>
+              <span class='descricao-menu'>Logística</span>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="/produtos">Produtos</a></li>
+              <li><a class="dropdown-item" href="/entradaproduto">Entrada de Produtos</a></li>
+              <li><a class="dropdown-item" href="/procurasaidaproduto">Saída de Produtos</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown float-end" id='usuarios'>
+            <a class="nav-link active " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-user"></i><br>
+              <span class='descricao-menu' id='arruma-titulo'>Usuário</span>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="/register">Novo Usuário</a></li>
+              <li><a class="dropdown-item" href="/ativos">Usuários Ativos</a></li>
+              <li><a class="dropdown-item" href="/logout">Sair</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav> -->
+  <script type="text/javascript">
+    // document.getElementsByClassName('badge')[1].style.display = 'none'
+    // document.getElementsByClassName('badge')[0].style.display = 'none'
+
+    function pesquisa_novo_req_aprov() {
+
+      $('#pesquisa_novo_req_aprov').html("");
+
+      $.get("/api/chamados/pendencia/aprovacao/{{auth()->user()->id}}", function(produto) {
+        for (u = 0; u < produto.length; u++) {
+          html = produto[u];
+          if (document.getElementsByClassName('badge')[0].innerHTML != '') {
+            document.getElementsByClassName('badge')[0].style.display = 'block';
+            document.getElementsByClassName('badge')[0].innerHTML = html;
+            document.getElementsByClassName('badge')[1].style.display = 'block';
+            document.getElementsByClassName('badge')[1].innerHTML = html;
+          }
+
+          if (document.getElementsByClassName('badge')[0].innerHTML == '0') {
+            document.getElementsByClassName('badge')[0].style.display = 'none';
+            document.getElementsByClassName('badge')[1].style.display = 'none';
+          }
+
+          if (produto[u] > 0) {
+            $('#pesquisa_novo_req_aprov').html(html);
+          };
+        }
+      });
+    }
+
+
+/*     document.getElementById("botao-fechador2").addEventListener("click", function() {
+      if (document.getElementById('myNav').className == 'collapse navbar-collapse') {
+        document.getElementById('myNav').className = 'navbar-collapse collapse show'
+      } else if (document.getElementById('myNav').className == 'navbar-collapse collapse show') {
+        document.getElementById('myNav').className = 'navbar-collapse collapse'
+      } else if (document.getElementById('myNav').className == 'navbar-collapse collapse') {
+        document.getElementById('myNav').className = 'navbar-collapse collapse show'
+      }
+    }) */
+
+    /* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
+    function closeNav() {
+      if (document.getElementById("menu").style.marginLeft != "-270px") {
+        document.getElementById("menu").style.marginLeft = "-270px"
+      } else if (document.getElementById("menu").style.marginLeft == "-270px") {
+        document.getElementById("menu").style.marginLeft = ""
+      }
+    }
+
+    $(document).ready(function() {
+      $('#sidebarCollapse').on('click', function() {
+        $('#sidebar').toggleClass('active');
+      });
+
+    });
+
+    let descricao = document.getElementsByClassName('descricao-menu');
+    let teste = document.getElementsByClassName("dropdown-menu");
+    let icone = document.getElementsByClassName('nav-item');
+
+
+    let myIndex1;
+    let myIndex2;
+
+    $(icone).on("mouseover", function(event) {
+      myIndex1 = $(this).index();
+    })
+
+    $(teste).on("mouseover", function(event) {
+      myIndex2 = $(this).index();
+    })
+
+    // $(teste).hover(
+    //   function() {
+    //     for (let i = 0; i < descricao.length; i++) {
+    //       descricao[myIndex1].style.display = 'block';
+    //     }
+    //   },
+    //   function() {
+    //     for (let i = 0; i < descricao.length; i++) {
+    //       // descricao[myIndex1].style.display = 'none';
+    //     }
+    //   }
+    // );
+
+    // $(icone).hover(
+    //   function() {
+    //     for (let i = 0; i < descricao.length; i++) {
+    //       descricao[myIndex1].style.display = 'block';
+    //     }
+    //   },
+    //   function() {
+    //     for (let i = 0; i < descricao.length; i++) {
+    //       descricao[myIndex1].style.display = 'none';
+    //     }
+    //   }
+    // );
+
+
+    $(function() {
+      let row = 0;
+
+      $('#addRow').click(function() {
+        row++;
+        let temp_td = '<tr><td scope="row" class="zeroCol">' + row +
+          '</td><td class="primeiraCol"><p class="prioridadeCampo"></p><textarea class="campoId" name="name" rows="2" cols="20" placeholder="Digite aqui a prioridade."></textarea></td><td class="segundaCol"><p class="descri-tabela"></p><label for="setorSelect"></label><select name="setor" class="selectTotal setorSelect"><option value=""></option><option value="Tecnologia da Informação">Tecnologia da Informação</option><option value="Recursos Humanos">Recursos Humanos</option><option value="Engenharia">Engenharia</option></select></td><td class="terceiraCol"><p class="areaCampo"></p><label for="areaSelect"></label><select name="area" class="selectTotal areaSelect"><option value=""></option><option value="Redes">Redes</option><option value="Telefonia">Telefonia</option><option value="Software">Software</option></select></td><td class="quartaCol"><p class="tipoCampo"></p><label for="tipoSelect"></label><select name="tipo" class="selectTotal tipoSelect"><option value=""></option><option value="Liberação de Acesso">Liberação de Acesso</option><option value="Dúvidas">Dúvidas</option><option value="Desenvolvimento">Desenvolvimento</option></select></td><td class="quintaCol"><p>Aberto</p><p></p></td><td class="sextaCol"><p class="urgenciaCampo"></p><label for="urgenciaSelect"></label><select name="urgencia" class="selectTotal urgenciaSelect"><option value=""></option><option value="Normal">Normal</option><option value="Urgente">Urgente</option><option value="Crítico">Crítico</option></select></td><td class="setimaCol"><p class="designadoCampo"></p><label for="designadoSelect"></label><select name="designado" class="selectTotal designadoSelect"><option value=""></option><option value="Ailton de Souza Junior">Ailton de Souza Junior</option><option value="Carlos Henrique">Carlos Henrique</option><option value="Everson Saporetti">Everson Saporetti</option></select></td><td class="oitavaCol"><p>Descrição Teste</p><p></p></td><td class="nonaCol"><button type="button" class="btn btn-success acoes-botao salvar">Salvar</button><button type="button" class="btn btn-success acoes-botao">Chat</button><button type="button" class="btn btn-success acoes-botao editar">Editar</button><button type="button" class="btn btn-danger acoes-botao">Aprovação</button></td></tr>';
+        $('tbody').append(temp_td)
+      });
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>

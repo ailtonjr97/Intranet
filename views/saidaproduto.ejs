@@ -36,9 +36,14 @@
       </div>
     </div>
     <div class="row" id='rowTerceira'>
-      <div class="col-lg">
+      <div class="col-lg-6">
         <%  produto.forEach(function(produtos){ %>
         <h3>Produto: <%=produtos.nome%></h3>
+        <% }) %>
+      </div>
+      <div class="col-lg-6">
+        <%  produto.forEach(function(produtos){ %>
+        <input type="text" name="nome" value="<%=produtos.nome%>">
         <% }) %>
       </div>
     </div>
@@ -57,26 +62,14 @@
           </div>
         </div>
         <div class="col-lg">
-          <div class="form-floating validadeDiv">
-            <input type="date" name="validade" class='validadeInput'>
-            <label for="dataValidade" id='validadeDescritivo'>Data de validade:</label>
-          </div>
-        </div>
-        <div class="col-lg">
           <div class="form-floating">
             <input class="form-control" id="icmsInput" type='number' name='quantidade'>
             <label for="icmsInput">Quantidade:</label>
           </div>
         </div>
-        <div class="col-lg">
-          <div class="form-floating">
-            <input class="form-control" id="nfInput" name='nf' type='number'>
-            <label for="nfInput">Número da NF:</label>
-          </div>
-        </div>
       </div>
     </div>
-    <div class="row mt-2">
+    <div class="row mt-4">
       <div class="col-lg" style='text-align: center'>
         <a href="/procurasaidaproduto" class="btn btn-warning" role="button">Escolher outro produto</a>
         <button type="submit" id='botaoSalva' class="btn btn-success">Salvar</button>

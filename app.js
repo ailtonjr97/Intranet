@@ -308,29 +308,38 @@ app.post('/entradaproduto', function(req, res){
 //////////////////////////////////////////////////
 
 app.get('/saidaproduto', function(req, res){
-  if(req.isAuthenticated()){
     Produto.find({'nome': req.query.nome}, function(err, produto){
      res.render("saidaproduto", {
        produto: produto,
      });
    });
-  }else{
-    res.redirect('/login')
-  }
 })
 
+app.post('/saidaproduto', function(req, res){
+  Produto.updateOne(
+    {"nome": req.body.nome },
+    {
+      $inc: {'quantidade': (req.body.quantidade) * -1}
+    },
+    {
+        returnNewDocument: true
+    },
+  function( error, result){
+  if(error){
+    res.send('Erro na saída de produto')
+  } else{
+    res.redirect('/produtos')
+  }
+});
+})
 ////////////////////////////////////////////////
 
 app.get('/procurasaidaproduto', function(req, res){
-  if(req.isAuthenticated()){
     Produto.find({}, function(err, produto){
      res.render("procurasaidaproduto", {
        produto: produto,
      });
    });
-  }else{
-    res.redirect('/login')
-  }
 })
 
 ////////////////////////////////////////////////

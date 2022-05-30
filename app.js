@@ -8,12 +8,15 @@ const _ = require("lodash");
 const session = require('express-session')
 const passport = require('passport');
 const passportLocalMongoose = require('passport-local-mongoose')
+const axios = require('axios');
 var findOrCreate = require('mongoose-findorcreate')
 require('dotenv').config()
 
 const app = express();
+const app2 = express();
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
+app2.use(express.json());
 app.use(express.static("public"));
 
 app.use((req, res, next) =>{
@@ -61,11 +64,17 @@ const produtoSchema = new mongoose.Schema({
   nf: Number
 });
 
+const maquinaSchema = new mongoose.Schema({
+  nome: String,
+});
+
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
 
 const User = mongoose.model('User', userSchema);
 const Produto = mongoose.model('Produto', produtoSchema);
+const Maquina = mongoose.model('Maquina', maquinaSchema);
+
 passport.use(User.createStrategy());
 passport.serializeUser(function(user, done){
   done(null, user.id)
@@ -351,18 +360,54 @@ app.get("/SJ50MM", (req, res) => {
 ///////////////////////////////////////
 
 app.get("/ordemprevcria", (req, res) => {
-  res.render('ordemprevcria')
+  res.render('ordensmanut/ordemprevcria')
 });
 
 //////////////////////////////////////////
 app.get("/ordemprevlista", (req, res) => {
   res.render('ordensmanut/ordemprevlista')
 });
-
-
 ////////////////////////////////////////////////
+app.get("/cadastramaquina", function(req, res){
+  res.render('cadastramaquina')
+})
 
-app.listen(5000, function() {
-  console.log("Server started on port 5000");
+app.post("/cadastramaquina", function(req, res){
+  const maquina = new Maquina({
+    nome: req.body.nome,
+  })
+  maquina.save(function(err){
+    if(err){
+      console.log(err);
+    } else {
+      res.redirect('/cadastramaquina');
+    };
+  });
+});
+
+app.get("/cadastramaquinaver", function(req, res){
+  Maquina.find({}, function(err, maquina){
+    res.send(maquina);
+  });
+});
+
+//////////////////////////////////////////////////////////////////////
+/* app.get("/testepag", function(req, res){
+  axios
+  .get('http://192.168.0.88/video/chamada/7706605042?pwd=Q3dxU002L2Z3REFyZW5ndldVY0FnZz09')
+  .then(res => {
+    console.log(res.data);
+  })
+  .catch(error => {
+    console.error(error);
+  });
+}); */
+///////////////////////////////////////////////
+
+
+
+
+app.listen(80, function() {
+  console.log("Server started on port 80");
 });
 

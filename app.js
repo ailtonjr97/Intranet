@@ -407,7 +407,7 @@ app.get("/cadastramaquinaver", function(req, res){
 
 
 
-app.listen(80, function() {
-  console.log("Server started on port 80");
+app.listen(8080, function() {
+  console.log("Server started on port 8080");
 });
 

@@ -1,0 +1,180 @@
+<%- include('partials/header') %>
+
+<style>
+  #rowMestra {
+    max-width: 99%;
+    margin-left: 1%
+  }
+
+  #titulo {
+    text-align: center;
+  }
+
+  .validadeInput {
+    width: 222px;
+    height: 58px;
+  }
+
+  #validadeDescritivo {
+    font-size: 14px;
+    padding-top: 0;
+    padding-left: 2px;
+  }
+
+  .validadeDiv {
+    border-color: gray;
+    background-clip: padding-box;
+    opacity: .50;
+  }
+</style>
+
+<form action="/cadastroproduto" method="post" onsubmit="return validate(this);">
+  <div class="row" id='rowMestra'>
+    <div class="row" id='descritivoCadastro'>
+      <div class="col-lg-12 mt-2" id='titulo'>
+        <h3 class='descritivoCadastro'>Abertura de Chamado</h3>
+      </div>
+    </div>
+    <div class="row" id='rowTerceira'>
+      <div class="col-lg">
+        <div class="form-floating">
+          <textarea name="" id="descricaoInput" width="100%" cols="174" placeholder="Descreva aqui o chamado:"></textarea> 
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-lg">
+            <div class="form-floating">
+                <select class="form-select" id="classificacaoSelect" aria-label="Floating label" name="nome">
+                    <option class='valor'>FIBRACEM - MATRIZ</option>
+                    <option class='valor'>FIBRACEM CD - PINHAIS</option>
+                    <option class='valor'>FIBRACEM IND - ES LINHARES</option>
+                    <option class='valor'>FIBRACEM CD - PINHAIS</option>
+                </select>
+                <label for="classificacaoSelect">Empresa:</label>
+            </div>
+        </div>
+        <div class="col-lg">
+            <div class="form-floating">
+                <select class="form-select areas" id="solicitacaoSelect" aria-label="Floating label" name="nome">
+                    <option class='valorNull' value="null"></option>
+                    <option class='valorTi' value="ti">Tecnologia da Informação</option>
+                    <option class='valorControladoria' value="controladoria">Controladoria</option>
+                </select>
+                <label for="solicitacaoSelect">Solicitar para:</label>
+            </div>
+        </div>
+        <div class="col-lg">
+            <div class="form-floating">
+                <select class="form-select" id="classificacaoSelect" aria-label="Floating label" name="nome">
+                    <option class='valor'>Normal</option>
+                    <option class='valor'>Urgente</option>
+                    <option class='valor'>Crítico</option>
+                </select>
+                <label for="classificacaoSelect">Urgência:</label>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-lg areaTi areaGeral">
+            <div class="form-floating">
+                <select class="form-select" id="classificacaoSelectTi" aria-label="Floating label" name="nome">
+                    <option class='valor'>Redes</option>
+                    <option class='valor'>Sistema Korp</option>
+                    <option class='valor'>Telefonia</option>
+                </select>
+                <label for="classificacaoSelectTi">Área de Atuação:</label>
+            </div>
+        </div>
+        <div class="col-lg areaControladoria areaGeral">
+            <div class="form-floating">
+                <select class="form-select" id="classificacaoSelectControladoria" aria-label="Floating label" name="nome">
+                    <option class='valor'>Ajustes</option>
+                    <option class='valor'>Descartes</option>
+                    <option class='valor'>EAN/GTIN</option>
+                </select>
+                <label for="classificacaoSelectControladoria">Área de Atuação:</label>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-lg atividadeTiRedes atividadeGeral">
+            <div class="form-floating">
+                <select class="form-select" id="classificacaoSelectTi" aria-label="Floating label" name="nome">
+                    <option class='valor'>Problema</option>
+                    <option class='valor'>Liberação de acessos</option>
+                    <option class='valor'>Backup</option>
+                    <option class='valor'>Bloqueio de SPAM</option>
+                </select>
+                <label for="classificacaoSelectTi">Atividade:</label>
+            </div>
+        </div>
+        <div class="col-lg atividadeTiSistemaKorp atividadeGeral">
+            <div class="form-floating">
+                <select class="form-select" id="classificacaoSelectSistemaKorp" aria-label="Floating label" name="nome">
+                    <option class='valor'>Sistema Lento</option>
+                    <option class='valor'>Problema</option>
+                    <option class='valor'>Relatórios</option>
+                    <option class='valor'>Dúvidas</option>
+                </select>
+                <label for="classificacaoSelectSistemaKorp">Atividade:</label>
+            </div>
+        </div>
+        <div class="col-lg atividadeControladoriaAjustes atividadeGeral">
+            <div class="form-floating">
+                <select class="form-select" id="classificacaoSelectAjustes" aria-label="Floating label" name="nome">
+                    <option class='valor'>Ajuste de Estoque</option>
+                    <option class='valor'>Libera alteração</option>
+                    <option class='valor'>Moagem</option>
+                </select>
+                <label for="classificacaoSelectAjustes">Atividade:</label>
+            </div>
+        </div>
+    </div>
+  </div>
+  <button type="submit" id='botaoSalva' class="btn btn-success mt-3" style='margin-left: 47%;'>Salvar</button>
+</form>
+
+<script>
+
+    //Pergunta antes do post se realmente o usuário quer abrir o chamado
+  function validate(form) {
+    if (document.getElementsByName('descri')[0].value == '') {
+      alert('O campo descrição não pode ser vazio');
+      return false;
+    } else {
+      return confirm('Deseja realmente abrir esse chamado?');
+    };
+  };
+  ////////////////////////////////////////////////////////////////////
+
+  //Determina a Área de Atuação e Atividade de acordo com o que o usuário escolher em "Solicitar para:"
+  for(let i = 0; i < document.getElementsByClassName('atividadeGeral').length; i++){
+    document.getElementsByClassName('atividadeGeral')[i].style.display = 'none'
+    document.getElementsByClassName('areaGeral')[i].style.display = 'none'
+    for(let j = 0; j < document.getElementsByClassName('atividadeGeral').length; j++){
+    document.getElementById("solicitacaoSelect").addEventListener("click", function(){
+    let e1 = document.getElementById("solicitacaoSelect");
+    let e = e1.value
+    if(e == 'ti'){
+        document.getElementsByClassName('atividadeGeral')[j].style.display = 'none'
+        document.getElementsByClassName('areaGeral')[j].style.display = 'none'
+        document.getElementsByClassName('areaTi')[j].style.display = 'block'
+        document.getElementsByClassName('atividadeTiRedes')[j].style.display = 'block'
+    } else if(e == 'controladoria'){
+        document.getElementsByClassName('areaControladoria')[j].style.display = 'block'
+        document.getElementsByClassName('atividadeControladoriaAjustes')[j].style.display = 'block'
+        document.getElementsByClassName('atividadeGeral')[j].style.display = 'none'
+        document.getElementsByClassName('areaGeral')[j].style.display = 'none'
+    } else if(e == 'null'){
+        document.getElementsByClassName('atividadeGeral')[j].style.display = 'none'
+        document.getElementsByClassName('areaGeral')[j].style.display = 'none'
+    }
+  });
+    }
+  };
+
+</script>
+
+
+<%- include('partials/footer') %>

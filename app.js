@@ -367,29 +367,11 @@ app.get("/ordemprevcria", (req, res) => {
 app.get("/ordemprevlista", (req, res) => {
   res.render('ordensmanut/ordemprevlista')
 });
-////////////////////////////////////////////////
-app.get("/cadastramaquina", function(req, res){
-  res.render('cadastramaquina')
+
+////////////////////////////////////////////////////////
+app.get("/abrechamado", function(req, res){
+  res.render('abrechamado.ejs');
 })
-
-app.post("/cadastramaquina", function(req, res){
-  const maquina = new Maquina({
-    nome: req.body.nome,
-  })
-  maquina.save(function(err){
-    if(err){
-      console.log(err);
-    } else {
-      res.redirect('/cadastramaquina');
-    };
-  });
-});
-
-app.get("/cadastramaquinaver", function(req, res){
-  Maquina.find({}, function(err, maquina){
-    res.send(maquina);
-  });
-});
 
 //////////////////////////////////////////////////////////////////////
 /* app.get("/testepag", function(req, res){

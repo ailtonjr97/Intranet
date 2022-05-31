@@ -163,7 +163,7 @@ tr{
         <%  usuario.forEach(function(usuarios){ %>
         <tr>
             <% for(let i = 0; i < 4; i++) { %>
-            <td><%=usuarios.cargo[1].cargoDescri%></td>
+            <td><%usuarios.cargo[1].cargoDescri%></td>
             <% } %>
             <td>
               <a href="/dados/<%=usuarios._id%>" class="btn btn-success">Editar</a>

@@ -6,6 +6,10 @@
     margin-left: 1%
   }
 
+  #descricaoInput{
+    resize: both;
+  }
+
   #titulo {
     text-align: center;
   }
@@ -37,9 +41,7 @@
     </div>
     <div class="row" id='rowTerceira'>
       <div class="col-lg">
-        <div class="form-floating">
-          <textarea name="" id="descricaoInput" width="100%" cols="174" placeholder="Descreva aqui o chamado:"></textarea> 
-        </div>
+          <textarea name="descricao" style="min-width: 100%; border: 1px solid #ced4da; border-radius: 0.25rem;" placeholder="Descrição do chamado:"></textarea>
       </div>
     </div>
     <div class="row mt-2">
@@ -105,6 +107,12 @@
                     <option class='valor'>Liberação de acessos</option>
                     <option class='valor'>Backup</option>
                     <option class='valor'>Bloqueio de SPAM</option>
+                    <option class='valor'>Criar e-mail</option>
+                    <option class='valor'>Criar usuário de rede</option>
+                    <option class='valor'>Problema no e-mail</option>
+                    <option class='valor'>Instalação de roteador Wi-Fi</option>
+                    <option class='valor'>Sem acesso a internet</option>
+                    <option class='valor'>Sem acesso a rede</option>
                 </select>
                 <label for="classificacaoSelectTi">Atividade:</label>
             </div>
@@ -116,6 +124,10 @@
                     <option class='valor'>Problema</option>
                     <option class='valor'>Relatórios</option>
                     <option class='valor'>Dúvidas</option>
+                    <option class='valor'>Liberação de acessos</option>
+                    <option class='valor'>Desenvolvimento</option>
+                    <option class='valor'>Sistema travado</option>
+                    <option class='valor'>Atualização</option>
                 </select>
                 <label for="classificacaoSelectSistemaKorp">Atividade:</label>
             </div>
@@ -173,6 +185,8 @@
   });
     }
   };
+
+
 
 </script>
 

@@ -7,10 +7,13 @@ const ejs = require("ejs");
 const _ = require("lodash");
 const session = require('express-session')
 const passport = require('passport');
-const passportLocalMongoose = require('passport-local-mongoose')
+const passportLocalMongoose = require('passport-local-mongoose');
 const axios = require('axios');
-var findOrCreate = require('mongoose-findorcreate')
-require('dotenv').config()
+let XMLHttpRequest = require('xhr2');
+var findOrCreate = require('mongoose-findorcreate');
+const { response } = require("express");
+const router = express.Router();
+require('dotenv').config();
 
 const app = express();
 const app2 = express();
@@ -340,7 +343,7 @@ app.post('/saidaproduto', function(req, res){
     res.redirect('/produtos')
   }
 });
-})
+});
 ////////////////////////////////////////////////
 
 app.get('/procurasaidaproduto', function(req, res){
@@ -371,22 +374,17 @@ app.get("/ordemprevlista", (req, res) => {
 ////////////////////////////////////////////////////////
 app.get("/abrechamado", function(req, res){
   res.render('abrechamado.ejs');
-})
+});
 
 //////////////////////////////////////////////////////////////////////
-/* app.get("/testepag", function(req, res){
-  axios
-  .get('http://192.168.0.88/video/chamada/7706605042?pwd=Q3dxU002L2Z3REFyZW5ndldVY0FnZz09')
-  .then(res => {
-    console.log(res.data);
-  })
-  .catch(error => {
-    console.error(error);
-  });
-}); */
-///////////////////////////////////////////////
 
+app.get("/test", (req, res, next) => {
 
+  axios.get("http://192.168.0.84:8080/produtos")
+      .then(response => {
+          res.render("produtos2", { product: response.data});
+      });
+});
 
 
 app.listen(8080, function() {

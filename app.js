@@ -378,7 +378,7 @@ app.get("/abrechamado", function(req, res){
 
 //////////////////////////////////////////////////////////////////////
 
-app.get("/test", (req, res, next) => {
+app.get("/produtoskorp", (req, res, next) => {
 
   axios.get("http://192.168.0.84:8080/produtos")
       .then(response => {

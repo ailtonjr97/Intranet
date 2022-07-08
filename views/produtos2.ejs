@@ -177,34 +177,32 @@
   }
 </style>
 
-<h1 style='text-align: center; margin-top: 1%;'>Produtos Cadastrados no Korp</h1>
+  <h1 style='text-align: center; margin-top: 1%;'>Produtos Cadastrados no Korp</h1>
 
-<input type="text" class="form-control" id="searchInput" onkeyup="searchFunction()" placeholder="Digite o código do produto">
-
-<div class="table-wrapper table-hover table-responsive" id='tabela'>
-  <table class="fl-table" id='tabela2'>
-    <thead>
-      <tr>
-        <th>Código</th>
-        <th>Descritivo</th>
-        <th>Tipo</th>
-        <th>CODTIP</th>
-        <th>Preço</th>
-      </tr>
-    </thead>
-    <tbody>
-        <% for(let i = 0; i < product.length; i++) { %>
-      <tr style="display: none;" id="sometr">
-        <td class="codigo"><%=product[i].CODPCA%></td>
-        <td><%=product[i].PRODUTO%></td>
-        <td><%=product[i].TIPO%></td>
-        <td><%=product[i].CODTIP%></td>
-        <td><%=product[i].PRECO%></td>
-      </tr>
-      <% } %>
-    <tbody>
-  </table>
-</div>
+  <input type="text" class="form-control" id="searchInput" onkeyup="searchFunction()" placeholder="Digite o código do produto">
+  
+  <div class="table-wrapper table-hover table-responsive" id='tabela'>
+    <table class="fl-table" id='tabela2'>
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Descritivo</th>
+          <th>Tipo</th>
+          <th>CODTIP</th>
+        </tr>
+      </thead>
+      <tbody>
+          <% for(let i = 0; i < product.length; i++) { %>
+        <tr style="display: none;" id="sometr">
+          <td class="codigo"><%=product[i].CODPCA%></td>
+          <td><%=product[i].PRODUTO%></td>
+          <td><%=product[i].TIPO%></td>
+          <td><%=product[i].CODTIP%></td>
+        </tr>
+        <% } %>
+      <tbody>
+    </table>
+  </div>
 
 <script>
 
@@ -230,4 +228,5 @@
       }
       document.getElementById('sometr').display = 'none'
   }
+
 </script>
